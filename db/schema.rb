@@ -11,13 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616132944) do
+ActiveRecord::Schema.define(version: 20160616180314) do
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.string   "remote_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "slug"
+    t.string   "description"
+    t.string   "size_type_color"
+    t.string   "tags"
+    t.integer  "price"
+    t.integer  "quantity"
+    t.string   "sku"
+    t.string   "website"
   end
 
   add_index "products", ["remote_id"], name: "index_products_on_remote_id"

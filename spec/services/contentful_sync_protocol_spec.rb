@@ -23,7 +23,15 @@ RSpec.describe ContentfulSyncProtocol do
         protocol.each_items_batch do |items|
           expect(items[0].keys).to include :id
           expect(items[0].keys).to include :name
-          expect(items[0].keys.length).to eq 2
+          expect(items[0].keys).to include :slug
+          expect(items[0].keys).to include :description
+          expect(items[0].keys).to include :size_type_color
+          expect(items[0].keys).to include :tags
+          expect(items[0].keys).to include :price
+          expect(items[0].keys).to include :quantity
+          expect(items[0].keys).to include :sku
+          expect(items[0].keys).to include :website
+          expect(items[0].keys.length).to eq 10
         end
       end
     end
