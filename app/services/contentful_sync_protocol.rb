@@ -42,7 +42,7 @@ private
   def serialize item
     {
       id: item["sys"]["id"],
-      product_name: item["fields"]["productName"]["en-US"],
+      name: item["fields"]["productName"]["en-US"],
     }
   end
 end
