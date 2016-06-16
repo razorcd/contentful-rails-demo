@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616182014) do
+ActiveRecord::Schema.define(version: 20160616221845) do
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20160616182014) do
     t.string   "slug"
     t.string   "description"
     t.string   "size_type_color"
-    t.string   "tags"
     t.integer  "price"
     t.integer  "quantity"
     t.string   "sku"
@@ -44,4 +43,5 @@ ActiveRecord::Schema.define(version: 20160616182014) do
   end
 
   add_index "tags", ["value"], name: "index_tags_on_value", unique: true
+
 end
