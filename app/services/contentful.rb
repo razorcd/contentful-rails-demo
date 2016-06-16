@@ -8,18 +8,26 @@ class Contentful
 private
 
   def update item
-    product = Product.find_or_create_by(remote_id: item[:id])
-    product.update({
-      name: item[:name],
-      slug: item[:slug],
-      description: item[:description],
-      size_type_color: item[:size_type_color],
-      tags: item[:tags],
-      price: item[:price],
-      quantity: item[:quantity],
-      sku: item[:sku],
-      website: item[:website],
-    }) #skips query if data is the same
+    Product.transaction do
+      product = Product.find_or_create_by(remote_id: item[:id])
+      product.update({
+        name: item[:name],
+        slug: item[:slug],
+        description: item[:description],
+        size_type_color: item[:size_type_color],
+        price: item[:price],
+        quantity: item[:quantity],
+        sku: item[:sku],
+        website: item[:website],
+      }) #skips calling SQL query if data is the same
+      product.tags = persisted_tags(item[:tags]) if item[:tags]
+    end
+  end
+
+  def persisted_tags tags
+    tags.map do |tag|
+      Tag.find_or_create_by(value: tag)
+    end
   end
 end
 
