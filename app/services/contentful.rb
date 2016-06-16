@@ -26,7 +26,7 @@ private
 
   def persisted_tags tags
     tags.map do |tag|
-      Tag.find_or_create_by(value: tag)
+      Tag.find_or_create_by(value: tag) #skips calling SQL query if data is the same
     end
   end
 end
