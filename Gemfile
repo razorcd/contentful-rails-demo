@@ -22,6 +22,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rest-client', '~> 1.8.0'
 
+gem 'dotenv-rails', '~> 2.1.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
