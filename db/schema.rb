@@ -44,5 +44,4 @@ ActiveRecord::Schema.define(version: 20160616182014) do
   end
 
   add_index "tags", ["value"], name: "index_tags_on_value", unique: true
-
 end
