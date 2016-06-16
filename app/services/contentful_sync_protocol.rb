@@ -1,34 +1,21 @@
-require 'rest_client'
-
 class ContentfulSyncProtocol
   ACCESS_TOKEN = ENV["ACCESS_TOKEN"]
   SPACE = ENV["SPACE"]
   CONTENT_TYPE = ENV["CONTENT_TYPE"]
 
-  def initialize
-    @items = []
-  end
-
-  def items
+  def each_items_batch
     response = JSON.parse request(uri: build_initial_request_uri)
 
     loop do
       response_items = response["items"]
-      puts response_items.count
       break if response_items.empty?
 
-      response_items.each do |item|
-        @items << serialize(item)
-        # yield serialize(item)
-      end
+      serialized_items = response_items.map {|item| serialize(item) }
+      yield serialized_items
 
       next_request_uri = build_next_request_uri from_uri: response["nextSyncUrl"]
       response = JSON.parse request(uri: next_request_uri)
-
-      binding.pry
     end
-
-    @items
   end
 
 private
