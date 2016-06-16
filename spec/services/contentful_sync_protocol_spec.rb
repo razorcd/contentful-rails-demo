@@ -2,7 +2,9 @@ require "rails_helper"
 
 RSpec.describe ContentfulSyncProtocol do
   let(:sync_data) do
-    ContentfulSyncProtocol.new.sync_data
+    VCR.use_cassette("sync_data") do
+      ContentfulSyncProtocol.new.sync_data
+    end
   end
 
   context "#sync_data" do

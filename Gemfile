@@ -33,6 +33,8 @@ gem 'rest-client', '~> 1.8.0'
 group :test do
   gem 'rspec-rails', '~> 3.4.2'
   gem 'capybara-webkit', '~> 1.11.1'
+  gem 'vcr', '~> 3.0.3'
+  gem 'webmock', '~> 2.1.0'
 end
 
 group :development, :test do
