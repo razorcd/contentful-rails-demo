@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616180314) do
+ActiveRecord::Schema.define(version: 20160616182014) do
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
@@ -29,5 +29,20 @@ ActiveRecord::Schema.define(version: 20160616180314) do
   end
 
   add_index "products", ["remote_id"], name: "index_products_on_remote_id"
+
+  create_table "products_tags", id: false, force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "tag_id"
+  end
+
+  add_index "products_tags", ["product_id", "tag_id"], name: "index_products_tags_on_product_id_and_tag_id"
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "value",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "tags", ["value"], name: "index_tags_on_value", unique: true
 
 end
