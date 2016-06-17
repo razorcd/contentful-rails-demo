@@ -20,19 +20,8 @@ RSpec.describe Contentful::SyncProtocol do
 
     it "should return serialized items" do
       VCR.use_cassette("sync_request") do
-        protocol.each_items_batch do |items|
-          expect(items[0].keys).to include :id
-          expect(items[0].keys).to include :name
-          expect(items[0].keys).to include :slug
-          expect(items[0].keys).to include :description
-          expect(items[0].keys).to include :size_type_color
-          expect(items[0].keys).to include :tags
-          expect(items[0].keys).to include :price
-          expect(items[0].keys).to include :quantity
-          expect(items[0].keys).to include :sku
-          expect(items[0].keys).to include :website
-          expect(items[0].keys.length).to eq 10
-        end
+        expect(Contentful::SyncSerializer).to receive(:item).and_return({}).at_least(1)
+        protocol.each_items_batch {|items| items }
       end
     end
   end

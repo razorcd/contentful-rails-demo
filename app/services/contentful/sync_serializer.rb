@@ -2,7 +2,7 @@ module Contentful::SyncSerializer
   def self.item item
     if item["sys"]["type"] == "Entry" && item["sys"]["contentType"]["sys"]["id"] == ENV["PRODUCT_CONTENT_TYPE"]
       return self.product_entry item
-    elsif item["sys"]["type"] == "Deletion"
+    elsif item["sys"]["type"] == "DeletedEntry"
       return self.deletion item
     else
       return nil
@@ -11,6 +11,7 @@ module Contentful::SyncSerializer
 
   def self.product_entry item
     {
+      type: :entry,
       id: item["sys"]["id"],
       name: item["fields"]["productName"]["en-US"],
       slug: item["fields"]["slug"]["en-US"],
@@ -25,6 +26,9 @@ module Contentful::SyncSerializer
   end
 
   def self.deletion item
-    {}
+    {
+      # type: :deleted_entry,
+      # id: item["sys"]["id"],
+    }
   end
 end
