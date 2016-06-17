@@ -1,28 +1,11 @@
-## README
+## Contentful demo app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Synchronizes a local datastore with the remote Contentful datastore.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+##TODO
+- [ ] add endpoint to trigger a sync that incrementally updates the local data
+- [ ] to completely reset the local data by triggering a full initial sync
+- [ ] add a `starting_from` parameter to sync so it reads only the new data
+- [ ] ensure recursive sync is functional (reduce elements count per request)
+- [ ] add FactoryGirl for functional tests
+- [ ] sync files
