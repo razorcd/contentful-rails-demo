@@ -10,6 +10,7 @@ class Contentful::SyncUrl
   class Contentful::SyncUrl::Sigleton
     SPACE = ENV["SPACE"] || raise("SPACE env var not set")
     INITIAL_URL= "https://cdn.contentful.com/spaces/#{SPACE}/sync"
+    NEXT_URL_FILE = "tmp/_contentful_next_url_#{Rails.env}"
 
     def initialize
       persisted_url = read_persisted_next_url
@@ -33,20 +34,30 @@ class Contentful::SyncUrl
 
     def reset!
       @next_url = Contentful::UrlBuilder.new INITIAL_URL
+      clear_persisted_next_url
     end
 
   private
 
     def read_persisted_next_url
-      nil # TODO
+      return unless File.exists?(NEXT_URL_FILE)
+      file = File.open(NEXT_URL_FILE, 'r')
+      file.read.chomp.tap { file.close }
+    rescue
+      file.close
     end
 
     def write_persisted_next_url url
-      nil # TODO
+      file = File.open(NEXT_URL_FILE, 'w')
+      file.puts url
+    ensure
+      file.close
     end
 
-    def clear_persisted_next_url url
-      nil # TODO
+    def clear_persisted_next_url
+      file = File.open(NEXT_URL_FILE, 'w')
+    ensure
+      file.close
     end
   end
 
