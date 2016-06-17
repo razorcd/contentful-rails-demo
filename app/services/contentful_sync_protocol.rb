@@ -13,8 +13,12 @@ class ContentfulSyncProtocol
       serialized_items = response_items.map {|item| serialize(item) }
       yield serialized_items
 
-      next_request_uri = build_next_request_uri from_uri: response["nextSyncUrl"]
-      response = JSON.parse request(uri: next_request_uri)
+      if response["nextPageUrl"]
+        next_request_uri = build_next_request_uri from_uri: response["nextPageUrl"]
+        response = JSON.parse request(uri: next_request_uri)
+      else
+        break
+      end
     end
   end
 
