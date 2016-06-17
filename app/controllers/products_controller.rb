@@ -8,6 +8,17 @@ class ProductsController < ApplicationController
 
   def sync_all
     Contentful.new.syncronize_products!
+
+    render nothing: true, status: 200
+  end
+
+  def reset_and_sync_all
+    ActiveRecord::Base.transaction do
+      products= Product.delete_all
+      products= Tag.delete_all
+    end
+    Contentful.new.syncronize_products!
+
     render nothing: true, status: 200
   end
 end

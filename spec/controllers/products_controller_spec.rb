@@ -18,5 +18,16 @@ RSpec.describe ProductsController, type: :controller do
       expect(response.code).to eq "200"
     end
   end
+
+  context "#reset_and_sync_all" do
+    it "should trigger a full products reset and sync" do
+      expect(Product).to receive(:delete_all)
+      expect(Tag).to receive(:delete_all)
+      expect(Contentful).to receive_message_chain(:new, :syncronize_products!)
+
+      get :reset_and_sync_all
+      expect(response.code).to eq "200"
+    end
+  end
 end
 

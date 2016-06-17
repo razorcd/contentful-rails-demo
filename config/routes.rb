@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :products, only: [:index] do
     collection do
       get :sync_all
+      get :reset_and_sync_all
     end
   end
 

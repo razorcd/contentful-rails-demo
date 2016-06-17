@@ -9,3 +9,4 @@ Synchronizes a local datastore with the remote Contentful datastore.
 - [ ] ensure recursive sync is functional (reduce elements count per request)
 - [ ] add FactoryGirl for functional tests
 - [ ] sync files
+- [ ] add integration tests
