@@ -2,7 +2,10 @@
 
 - GET `/products`
 
+Will return a list of products available in local data store.
+
 response: 
+  HTTP OK 200
 ``` json
 [
   {
@@ -88,3 +91,19 @@ response:
   }
 ]
 ```
+
+
+- GET `/products/sync_all`
+
+Will update all local product records with data from Contentful API.
+
+response: 
+  HTTP OK 200
+
+
+- GET `/products/reset_and_sync_all`
+
+Will clear all the product records and repopulate them with data from Contentful API.
+
+response: 
+  HTTP OK 200
