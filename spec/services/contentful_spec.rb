@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Contentful do
   context "#syncronize_products!" do
-    it "should iterate over items and update the DB" do
+    it "should iterate over items and update DB records" do
       protocol_double = instance_double(Contentful::SyncProtocol)
       expect(Contentful::SyncProtocol).to receive(:new).and_return(protocol_double)
       expect(protocol_double).to receive(:each_items_batch).and_yield([{
@@ -38,5 +38,21 @@ RSpec.describe Contentful do
 
       Contentful.new.syncronize_products!
     end
+
+    it "should iterate over items and destroy DB records" do
+      protocol_double = instance_double(Contentful::SyncProtocol)
+      expect(Contentful::SyncProtocol).to receive(:new).and_return(protocol_double)
+      expect(protocol_double).to receive(:each_items_batch).and_yield([{
+        type: :deleted_entry,
+        id: "123",
+      }])
+
+      product_double = instance_double(Product)
+      expect(Product).to receive(:find_by).with(remote_id: "123").and_return(product_double)
+      expect(product_double).to receive(:destroy).once
+
+      Contentful.new.syncronize_products!
+    end
+
   end
 end

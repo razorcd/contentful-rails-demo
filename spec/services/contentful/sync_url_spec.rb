@@ -32,19 +32,19 @@ RSpec.describe Contentful::SyncUrl do
 
     it "should set default url" do
       @sync_url.reset!
-      expect(@sync_url.get).to include Contentful::SyncUrl::Sigleton::INITIAL_URL + "?access_token="
+      expect(@sync_url.get).to include Contentful::SyncUrl::INITIAL_URL + "?access_token="
       expect(@sync_url.get).to include "initial=true"
     end
 
     it "should set default url by calling #new again" do
       subject.new.reset!
-      expect(@sync_url.get).to include Contentful::SyncUrl::Sigleton::INITIAL_URL + "?access_token="
+      expect(@sync_url.get).to include Contentful::SyncUrl::INITIAL_URL + "?access_token="
       expect(@sync_url.get).to include "initial=true"
     end
   end
 
   describe "persisting the sync_url in a file" do
-    let(:filename) { Contentful::SyncUrl::Sigleton::NEXT_URL_FILE }
+    let(:filename) { Contentful::SyncUrl::NEXT_URL_FILE }
 
     before(:each) { File.delete filename if File.exists?(filename)}
     after(:each) { File.delete filename if File.exists?(filename)}

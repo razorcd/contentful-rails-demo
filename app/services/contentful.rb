@@ -42,7 +42,7 @@ private
   end
 
   def delete_product item
-    Product.find(remote_id: item[:id]).destroy
+    Product.find_by(remote_id: item[:id]).destroy
   end
 end
 

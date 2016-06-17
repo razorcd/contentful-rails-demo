@@ -23,6 +23,7 @@ RSpec.describe ProductsController, type: :controller do
     it "should trigger a full products reset and sync" do
       expect(Product).to receive(:delete_all)
       expect(Tag).to receive(:delete_all)
+      expect(Contentful::SyncUrl).to receive_message_chain(:new, :reset!)
       expect(Contentful).to receive_message_chain(:new, :syncronize_products!)
 
       get :reset_and_sync_all
