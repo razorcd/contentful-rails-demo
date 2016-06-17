@@ -7,9 +7,8 @@
 #   sync_url.reset! or Contentful::SyncUrl.new.reset!
 #   sync_url.get       # => https://cdn.contentful.com/spaces/space123space/sync?access_token=fd98dsg0&initial=true
 class Contentful::SyncUrl
-  SPACE = ENV["SPACE"] || raise("SPACE env var not set")
-  INITIAL_URL= "https://cdn.contentful.com/spaces/#{SPACE}/sync"
-  NEXT_URL_FILE = "tmp/_contentful_next_url_#{Rails.env}"
+  INITIAL_URL= ENV["INITIAL_PRODUCTS_URL"]
+  NEXT_URL_FILE = ENV["NEXT_URL_FILE"]
 
   class Contentful::SyncUrl::Sigleton
     def initialize
