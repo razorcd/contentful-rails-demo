@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe ContentfulSyncProtocol do
-  let(:protocol) { ContentfulSyncProtocol.new }
+RSpec.describe Contentful::SyncProtocol do
+  let(:protocol) { Contentful::SyncProtocol.new }
 
   context "#each_items_batch" do
     it "should yield" do

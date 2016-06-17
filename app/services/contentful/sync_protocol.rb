@@ -1,4 +1,4 @@
-class ContentfulSyncProtocol
+class Contentful::SyncProtocol
   ACCESS_TOKEN = ENV["ACCESS_TOKEN"]
   SPACE = ENV["SPACE"]
   CONTENT_TYPE = ENV["CONTENT_TYPE"]

@@ -2,7 +2,15 @@
 
 Synchronizes a local datastore with the remote Contentful datastore.
 
+See `doc_api.md` for all exposed endpoints.
+
+## Development
+
+- to run tests: `rspec`
+- to clear VCR persisted requests: `rm spec/fixtures/vcr_cassettes/*`
+
 ##TODO
+
 - [X] add method to recursively load sync data from Contentful API
 - [X] add endpoint to trigger a sync that incrementally updates the local data
 - [X] to completely reset the local data by triggering a full initial sync

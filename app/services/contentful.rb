@@ -1,13 +1,13 @@
 class Contentful
   def syncronize_products!
-    ContentfulSyncProtocol.new.each_items_batch do |items|
-      items.each {|item| update item}
+    Contentful::SyncProtocol.new.each_items_batch do |items|
+      items.each {|item| update_product item}
     end
   end
 
 private
 
-  def update item
+  def update_product item
     Product.transaction do
       product = Product.find_or_create_by(remote_id: item[:id])
       product.update({
@@ -20,11 +20,14 @@ private
         sku: item[:sku],
         website: item[:website],
       }) #skips calling SQL query if data is the same
-      product.tags = persisted_tags(item[:tags]) if item[:tags]
+
+      tags= update_and_load_tags(item[:tags])
+      product.update(tags: tags)
     end
   end
 
-  def persisted_tags tags
+  def update_and_load_tags tags
+    return [] if tags.blank?
     tags.map do |tag|
       Tag.find_or_create_by(value: tag) #skips calling SQL query if data is the same
     end
