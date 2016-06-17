@@ -1,4 +1,4 @@
-module Contentful::Serializer
+module Contentful::SyncSerializer
   def self.item item
     if item["sys"]["type"] == "Entry" && item["sys"]["contentType"]["sys"]["id"] == ENV["PRODUCT_CONTENT_TYPE"]
       return self.product_entry item

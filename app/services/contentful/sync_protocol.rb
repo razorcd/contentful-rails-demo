@@ -1,5 +1,3 @@
-require_relative 'sync_serializer'
-
 class Contentful::SyncProtocol
   ACCESS_TOKEN = ENV["ACCESS_TOKEN"]
   SPACE = ENV["SPACE"]
@@ -12,7 +10,7 @@ class Contentful::SyncProtocol
       break if response_items.empty?
 
       serialized_items = response_items.map do |item|
-        Contentful::Serializer.item(item)
+        Contentful::SyncSerializer.item(item)
       end.compact
       yield serialized_items
 
