@@ -1,42 +1,42 @@
 class Contentful::SyncProtocol
-  ACCESS_TOKEN = ENV["ACCESS_TOKEN"]
-  SPACE = ENV["SPACE"]
+  def initialize
+    @url = Contentful::SyncUrl.new
+  end
 
   def each_items_batch
-    response = JSON.parse request(uri: build_initial_request_uri)
-
+    response = get_hash_response
     loop do
-      response_items = response["items"]
-      break if response_items.empty?
+      items = response["items"]
+      break if items.empty?
 
-      serialized_items = response_items.map do |item|
+      serialized_items = items.map do |item|
         Contentful::SyncSerializer.item(item)
       end.compact
       yield serialized_items
 
+      @url.set_next(url: response["nextSyncUrl"].to_s) if response["nextSyncUrl"]
       break unless response["nextPageUrl"]
-      next_request_uri = build_next_page_request_uri from_uri: response["nextPageUrl"]
-      response = JSON.parse request(uri: next_request_uri)
+      response = JSON.parse request(response["nextPageUrl"])
     end
   end
 
 private
 
-  def request uri:
-    RestClient.get uri
+  def get_hash_response
+    response = request @url.get
+    hash_response = JSON.parse response
+    hash_response
   end
 
-  def build_initial_request_uri
-    initial = "initial=true"
-    access_token = "access_token=#{ACCESS_TOKEN}"
-    query = [initial, access_token].compact.join("&")
-
-    "https://cdn.contentful.com/spaces/#{SPACE}/sync?#{query}"
+  def request url
+    RestClient.get url
   end
 
-  def build_next_page_request_uri from_uri:
-    access_token = "access_token=#{ACCESS_TOKEN}"
-    "#{from_uri}&#{access_token}"
+  def next_sync_uri
+    if @initial_sync
+      build_initial_request_uri
+    else
+      build_next_sync_uri
+    end
   end
 end
-

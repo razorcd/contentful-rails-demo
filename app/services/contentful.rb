@@ -1,11 +1,19 @@
 class Contentful
   def syncronize_products!
     Contentful::SyncProtocol.new.each_items_batch do |items|
-      items.each {|item| update_product item}
+      items.each {|item| sync_product item}
     end
   end
 
 private
+
+  def sync_product item
+    if item[:type] == :entry
+      update_product item
+    elsif item[:type] == :deleted_entry
+      delete_product item
+    end
+  end
 
   def update_product item
     Product.transaction do
@@ -31,6 +39,10 @@ private
     tags.map do |tag|
       Tag.find_or_create_by(value: tag) #skips calling SQL query if data is the same
     end
+  end
+
+  def delete_product item
+    Product.find(remote_id: item[:id]).destroy
   end
 end
 

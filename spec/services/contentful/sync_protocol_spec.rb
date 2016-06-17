@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Contentful::SyncProtocol do
   let(:protocol) { Contentful::SyncProtocol.new }
+  before(:each) { Contentful::SyncUrl.new.reset! }
 
   context "#each_items_batch" do
     it "should yield" do
@@ -25,5 +26,4 @@ RSpec.describe Contentful::SyncProtocol do
       end
     end
   end
-
 end

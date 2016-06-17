@@ -34,6 +34,7 @@ class Contentful::SyncUrl
 
     def reset!
       @next_url = Contentful::UrlBuilder.new INITIAL_URL
+      @initial = true
       clear_persisted_next_url
     end
 

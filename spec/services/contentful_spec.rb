@@ -6,6 +6,7 @@ RSpec.describe Contentful do
       protocol_double = instance_double(Contentful::SyncProtocol)
       expect(Contentful::SyncProtocol).to receive(:new).and_return(protocol_double)
       expect(protocol_double).to receive(:each_items_batch).and_yield([{
+        type: :entry,
         id: "123",
         name: "name123",
         slug: "slug",
