@@ -10,4 +10,8 @@ class Product < ActiveRecord::Base
   def category_titles  #TODO: change to scope
     categories.map(&:title)
   end
+
+  def asset_url
+    asset && asset.file.url
+  end
 end

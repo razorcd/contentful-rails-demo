@@ -29,7 +29,8 @@ response:
     "category_titles": [
       "Toyz",
       "Home & Kitchen"
-    ]
+    ],
+    "asset_url": "localhost:3000/assets/files/000/000/073/original/quwowooybuqbl6ntboz3.jpg?1466378680"
   },
   {
     "id": 2,
@@ -53,7 +54,8 @@ response:
     ],
     "category_titles": [
       "Toyz"
-    ]
+    ],
+    "asset_url": "localhost:3000/assets/files/000/000/074/original/ryugj83mqwa1asojwtwb.jpg?1466378684"
   },
   {
     "id": 3,
@@ -75,7 +77,8 @@ response:
       "scandinavia",
       "designssssss"
     ],
-    "category_titles": []
+    "category_titles": [],
+    "asset_url": null
   },
   {
     "id": 4,
@@ -98,7 +101,8 @@ response:
     ],
     "category_titles": [
       "Home & Kitchen"
-    ]
+    ],
+    "asset_url": "localhost:3000/assets/files/000/000/075/original/jqvtazcyfwseah9fmysz.jpg?1466378682"
   }
 ]
 ```

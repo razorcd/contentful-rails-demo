@@ -83,6 +83,6 @@ Rails.application.configure do
       local_root: "#{Rails.root}/#{ENV['LOCAL_STORAGE_PATH']}"
     },
     fog_directory: "",
-    fog_host: "localhost"
+    fog_host: "#{ENV['FOG_HOST']}"
   }
 end
