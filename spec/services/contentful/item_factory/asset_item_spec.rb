@@ -7,7 +7,7 @@ RSpec.describe Contentful::ItemFactory::AssetItem do
       "fields" => {
         "title" => {"en-US" => "title_here"},
         "description" => {"en-US" => "description_here"},
-        "file" => {"en-US" => {"url" => "http://www.example.com/image1.jpg"}},
+        "file" => {"en-US" => {"url" => "//www.example.com/image1.jpg"}},
       }
     }
   end
@@ -20,7 +20,8 @@ RSpec.describe Contentful::ItemFactory::AssetItem do
       expect(asset_double).to receive(:update!).with({
           title: "title_here",
           description: "description_here",
-          file_url: "http://www.example.com/image1.jpg",
+          remote_file_url: "//www.example.com/image1.jpg",
+          file: "http://www.example.com/image1.jpg",
         })
 
       asset_item = Contentful::ItemFactory::AssetItem.new(response_item_hash)

@@ -4,7 +4,7 @@ class CreateAssets < ActiveRecord::Migration
       t.string :remote_id
       t.string :title
       t.string :description
-      t.string :file_url
+      t.string :remote_file_url
 
       t.timestamps null: false
     end

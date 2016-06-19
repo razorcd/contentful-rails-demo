@@ -18,3 +18,5 @@
 spec/fixtures/vcr_cassettes
 .env.*
 !.env.example
+/public/assets
+.fuse_hidden*

@@ -21,6 +21,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rest-client', '~> 1.8.0'
+gem 'paperclip', '~> 4.3.6'
+gem 'fog-local', '~> 0.3.0'
 
 gem 'dotenv-rails', '~> 2.1.1'
 # Use ActiveModel has_secure_password

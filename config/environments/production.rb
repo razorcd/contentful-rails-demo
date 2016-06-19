@@ -76,4 +76,13 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.paperclip_defaults = {
+    storage: :fog, fog_credentials: {
+      provider: "Local",
+      local_root: "#{Rails.root}/#{ENV['LOCAL_STORAGE_PATH']}"
+    },
+    fog_directory: "",
+    fog_host: "localhost"
+  }
 end
