@@ -13,7 +13,7 @@ class Contentful::SyncUrl
   class Contentful::SyncUrl::Sigleton
     def initialize
       persisted_url = read_persisted_next_url
-      @next_url = Contentful::UrlBuilder.new persisted_url || INITIAL_URL
+      @next_url = Contentful::UrlBuilder.new(persisted_url || INITIAL_URL)
       @initial = persisted_url.!
     end
 
@@ -26,7 +26,7 @@ class Contentful::SyncUrl
     end
 
     def set_next url:
-      @next_url = Contentful::UrlBuilder.new (url)
+      @next_url = Contentful::UrlBuilder.new url
       @initial = false
       write_persisted_next_url(url)
     end
