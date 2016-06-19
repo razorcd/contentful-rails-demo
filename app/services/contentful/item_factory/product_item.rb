@@ -1,5 +1,6 @@
 class Contentful::ItemFactory::ProductItem
   def initialize response_item
+    begin
     @serialized_item = {
       id: response_item["sys"]["id"],
       name: response_item.dig("fields", "productName", "en-US"),
@@ -12,7 +13,12 @@ class Contentful::ItemFactory::ProductItem
       sku: response_item.dig("fields", "sku", "en-US") || "",
       website: response_item.dig("fields", "website", "en-US") || "",
       category_remote_ids: response_item.dig("fields", "categories", "en-US")&.map {|c| c["sys"]["id"]} || [],
+      image_remote_id: response_item.dig("fields", "image", "en-US", "sys", "id"),
     }
+  rescue
+    binding.pry
+    puts
+  end
   end
 
   def syncronize_db!
@@ -30,6 +36,7 @@ class Contentful::ItemFactory::ProductItem
         website: @serialized_item[:website],
         tags: tags,
         categories: product_categories,
+        asset: product_asset,
       }) #skips calling SQL query if data is the same
     end
   end
@@ -41,11 +48,15 @@ private
   end
 
   def product_categories #TODO memoize it
-    category_remote_ids = @serialized_item[:category_remote_ids]
-    return [] if category_remote_ids.blank?
-    category_remote_ids.map do |category_remote_id|
+    return [] if @serialized_item[:category_remote_ids].blank?
+    @serialized_item[:category_remote_ids].map do |category_remote_id|
       Category.find_or_create_by(remote_id: category_remote_id)
     end
+  end
+
+  def product_asset #TODO memoize it
+    return nil if @serialized_item[:image_remote_id].blank?
+    Asset.find_or_create_by(remote_id: @serialized_item[:image_remote_id])
   end
 
   def update_and_load_tags tags #TODO memoize it
