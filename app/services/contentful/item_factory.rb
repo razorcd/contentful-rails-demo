@@ -7,10 +7,12 @@ class Contentful::ItemFactory
     content_type_id = @response_item.dig("sys", "contentType", "sys", "id")
     type = @response_item.dig("sys", "type")
 
-    if content_type_id == ENV["PRODUCT_CONTENT_TYPE"]
+    if content_type_id == ENV["PRODUCT_CONTENT_TYPE"] # && type == "Entry"
       return Contentful::ItemFactory::ProductItem.new @response_item
-    elsif content_type_id == ENV["CATEGORY_CONTENT_TYPE"]
+    elsif content_type_id == ENV["CATEGORY_CONTENT_TYPE"] # && type == "Entry"
       return Contentful::ItemFactory::CategoryItem.new @response_item
+    elsif type == "Asset"
+      return Contentful::ItemFactory::AssetItem.new @response_item
     elsif type == "DeletedEntry"
       return Contentful::ItemFactory::DeletedEntryItem.new @response_item
     else
@@ -19,11 +21,4 @@ class Contentful::ItemFactory
     end
   end
 
-  # def self.category_entry item
-  #   {
-  #     model_class: Category,
-  #     deleted: false,
-  #     id: item["sys"]["id"],
-  #   }
-  # end
 end

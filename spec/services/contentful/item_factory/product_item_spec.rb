@@ -26,18 +26,18 @@ RSpec.describe Contentful::ItemFactory::ProductItem do
 
   context "#syncronize_db!" do
     it "should create or update a Product record" do
-      product_doule = instance_double(Product)
+      product_double = instance_double(Product)
       tag_double = instance_double(Tag)
       category_double1 = instance_double(Category)
       category_double2 = instance_double(Category)
 
-      expect(Product).to receive(:find_or_create_by).with(remote_id: "some_id_here").and_return(product_doule)
+      expect(Product).to receive(:find_or_create_by).with(remote_id: "some_id_here").and_return(product_double)
       expect(Tag).to receive(:find_or_create_by).with(value: "tag1").and_return(tag_double)
       expect(Category).to receive(:find_or_create_by).with(remote_id: "111").and_return(category_double1)
       expect(Category).to receive(:find_or_create_by).with(remote_id: "222").and_return(category_double2)
 
 
-      expect(product_doule).to receive(:update!).with({
+      expect(product_double).to receive(:update!).with({
           name: "production_name_here",
           slug: "slug_here",
           description: "productDescription_here",
