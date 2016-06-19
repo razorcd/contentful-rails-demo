@@ -2,7 +2,13 @@ require "rails_helper"
 
 RSpec.describe Contentful::SyncProtocol do
   let(:protocol) { Contentful::SyncProtocol.new }
-  before(:each) { Contentful::SyncUrl.new.reset! }
+  before(:each) do
+    Contentful::SyncUrl.new.reset!
+
+    item_factory = instance_double(Contentful::ItemFactory)
+    allow(Contentful::ItemFactory).to receive(:new).at_least(:once).and_return(item_factory)
+    allow(item_factory).to receive(:get_item).at_least(:once).and_return [double]
+  end
 
   context "#each_items_batch" do
     it "should yield" do
@@ -19,11 +25,5 @@ RSpec.describe Contentful::SyncProtocol do
       end
     end
 
-    it "should return serialized items" do
-      VCR.use_cassette("sync_request") do
-        expect(Contentful::SyncSerializer).to receive(:item).and_return({}).at_least(1)
-        protocol.each_items_batch {|items| items }
-      end
-    end
   end
 end

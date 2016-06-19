@@ -6,16 +6,15 @@ class Contentful::SyncProtocol
   def each_items_batch
     response = get_hash_response
     loop do
-      items = response["items"]
-      break if items.empty?
+      response_items = response["items"]
+      (update_next_sync_url(response["nextSyncUrl"]); break) if response_items.empty?
 
-      serialized_items = items.map do |item|
-        Contentful::SyncSerializer.item(item)
+      serialized_items = response_items.map do |response_item|
+        Contentful::ItemFactory.new(response_item).get_item
       end.compact
       yield serialized_items
 
-      @url.set_next(url: response["nextSyncUrl"].to_s) if response["nextSyncUrl"]
-      break unless response["nextPageUrl"]
+      (update_next_sync_url(response["nextSyncUrl"]); break) unless response["nextPageUrl"]
       response = JSON.parse request(response["nextPageUrl"])
     end
   end
@@ -24,12 +23,11 @@ private
 
   def get_hash_response
     response = request @url.get
-    hash_response = JSON.parse response
-    hash_response
+    JSON.parse response
   end
 
   def request url
-    RestClient.get url
+    RestClient.get(url).tap {|response| log_request(url, response) }
   end
 
   def next_sync_uri
@@ -38,5 +36,14 @@ private
     else
       build_next_sync_uri
     end
+  end
+
+  def update_next_sync_url url
+    @url.set_next(url: url.to_s) unless url.to_s.empty?
+  end
+
+  def log_request request_url, response
+    Rails.logger.info "\nRequesting HTTP GET URL: #{request_url}"
+    Rails.logger.info("\nResponse:"); Rails.logger.info(response); Rails.logger.info("\n")
   end
 end
