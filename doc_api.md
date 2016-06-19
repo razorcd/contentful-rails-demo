@@ -25,6 +25,10 @@ response:
       "vase",
       "flowers",
       "accessories"
+    ],
+    "category_titles": [
+      "Toyz",
+      "Home & Kitchen"
     ]
   },
   {
@@ -46,6 +50,9 @@ response:
       "interior design",
       "yellow",
       "gifts"
+    ],
+    "category_titles": [
+      "Toyz"
     ]
   },
   {
@@ -67,7 +74,8 @@ response:
       "whisk",
       "scandinavia",
       "designssssss"
-    ]
+    ],
+    "category_titles": []
   },
   {
     "id": 4,
@@ -87,6 +95,9 @@ response:
       "toy",
       "car",
       "sweden"
+    ],
+    "category_titles": [
+      "Home & Kitchen"
     ]
   }
 ]

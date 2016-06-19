@@ -5,4 +5,8 @@ class Product < ActiveRecord::Base
   def tag_values  #TODO: change to scope
     tags.map(&:value)
   end
+
+  def category_titles  #TODO: change to scope
+    categories.map(&:title)
+  end
 end
