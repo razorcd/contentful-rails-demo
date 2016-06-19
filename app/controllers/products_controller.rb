@@ -26,6 +26,7 @@ private
     ActiveRecord::Base.transaction do
       products= Product.delete_all
       products= Tag.delete_all
+      products= Category.delete_all
     end
   end
 

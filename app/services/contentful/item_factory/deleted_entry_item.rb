@@ -6,7 +6,10 @@ class Contentful::ItemFactory::DeletedEntryItem
   end
 
   def syncronize_db!
-    Product.find_by(remote_id: @serialized_item[:id]).destroy!
+    record = Product.find_by(remote_id: @serialized_item[:id]) ||
+        Category.find_by(remote_id: @serialized_item[:id])
+
+    record.destroy
   end
 
 end

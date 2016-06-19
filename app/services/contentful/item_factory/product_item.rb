@@ -1,6 +1,5 @@
 class Contentful::ItemFactory::ProductItem
   def initialize response_item
-    #TODO: add params.permit ???
     @serialized_item = {
       id: response_item["sys"]["id"],
       name: response_item.dig("fields", "productName", "en-US"),
