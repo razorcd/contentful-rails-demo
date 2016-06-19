@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160619170113) do
+ActiveRecord::Schema.define(version: 20160619193833) do
+
+  create_table "assets", force: :cascade do |t|
+    t.string   "remote_id"
+    t.string   "title"
+    t.string   "description"
+    t.string   "file_url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string   "remote_id"
@@ -42,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160619170113) do
     t.integer  "quantity"
     t.string   "sku"
     t.string   "website"
+    t.integer  "asset_id"
   end
 
   add_index "products", ["remote_id"], name: "index_products_on_remote_id"

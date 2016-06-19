@@ -13,7 +13,7 @@ RSpec.describe Category, type: :model do
         {
           name: :products,
           class: ActiveRecord::Reflection::HasAndBelongsToManyReflection,
-        }
+        },
       ]
   end
 end

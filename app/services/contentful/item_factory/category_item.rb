@@ -26,42 +26,42 @@ __END__
 response_item example:
 
 {
-       "sys" => {
-              "space" => {
+   "sys" => {
+          "space" => {
+        "sys" => {
+                "type" => "Link",
+            "linkType" => "Space",
+                  "id" => "irjb6cmr6p6c"
+        }
+    },
+             "id" => "7LAnCobuuWYSqks6wAwY2a",
+           "type" => "Entry",
+      "createdAt" => "2016-06-09T18:40:29.029Z",
+      "updatedAt" => "2016-06-09T18:40:29.029Z",
+       "revision" => 1,
+    "contentType" => {
+        "sys" => {
+                "type" => "Link",
+            "linkType" => "ContentType",
+                  "id" => "6XwpTaSiiI2Ak2Ww0oi6qa"
+        }
+    }
+  },
+  "fields" => {
+                  "title" => {
+        "en-US" => "Home & Kitchen"
+    },
+                 "icon" => {
+        "en-US" => {
             "sys" => {
                     "type" => "Link",
-                "linkType" => "Space",
-                      "id" => "irjb6cmr6p6c"
-            }
-        },
-                 "id" => "7LAnCobuuWYSqks6wAwY2a",
-               "type" => "Entry",
-          "createdAt" => "2016-06-09T18:40:29.029Z",
-          "updatedAt" => "2016-06-09T18:40:29.029Z",
-           "revision" => 1,
-        "contentType" => {
-            "sys" => {
-                    "type" => "Link",
-                "linkType" => "ContentType",
-                      "id" => "6XwpTaSiiI2Ak2Ww0oi6qa"
+                "linkType" => "Asset",
+                      "id" => "6m5AJ9vMPKc8OUoQeoCS4o"
             }
         }
     },
-    "fields" => {
-                      "title" => {
-            "en-US" => "Home & Kitchen"
-        },
-                     "icon" => {
-            "en-US" => {
-                "sys" => {
-                        "type" => "Link",
-                    "linkType" => "Asset",
-                          "id" => "6m5AJ9vMPKc8OUoQeoCS4o"
-                }
-            }
-        },
-        "categoryDescription" => {
-            "en-US" => "Shop for furniture, bedding, bath, vacuums, kitchen products, and more"
-        }
+    "categoryDescription" => {
+        "en-US" => "Shop for furniture, bedding, bath, vacuums, kitchen products, and more"
     }
+  }
 }

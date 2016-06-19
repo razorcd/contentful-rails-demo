@@ -5,7 +5,7 @@ RSpec.describe Product, type: :model do
     all_columns = Product.columns.map(&:name)
     expect(all_columns).to match_array(
         ["id", "name", "remote_id", "created_at", "updated_at", "slug", "description",
-         "size_type_color", "price", "quantity", "sku", "website", "category_id"])
+         "size_type_color", "price", "quantity", "sku", "website", "asset_id"])
   end
 
   it "should have associations" do
@@ -19,7 +19,11 @@ RSpec.describe Product, type: :model do
         {
           name: :categories,
           class: ActiveRecord::Reflection::HasAndBelongsToManyReflection,
-        }
+        },
+        {
+          :name => :asset,
+          :class => ActiveRecord::Reflection::BelongsToReflection,
+        },
       ]
   end
 end
