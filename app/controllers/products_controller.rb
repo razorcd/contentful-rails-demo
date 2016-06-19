@@ -27,6 +27,7 @@ private
       products= Product.delete_all
       products= Tag.delete_all
       products= Category.delete_all
+      products= Asset.delete_all
     end
   end
 

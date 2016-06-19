@@ -24,6 +24,7 @@ RSpec.describe ProductsController, type: :controller do
       expect(Product).to receive(:delete_all)
       expect(Tag).to receive(:delete_all)
       expect(Category).to receive(:delete_all)
+      expect(Asset).to receive(:delete_all)
       expect(Contentful::SyncUrl).to receive_message_chain(:new, :reset!)
       expect(Contentful).to receive_message_chain(:new, :syncronize_products!)
 
