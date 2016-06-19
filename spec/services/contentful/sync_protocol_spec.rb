@@ -25,5 +25,14 @@ RSpec.describe Contentful::SyncProtocol do
       end
     end
 
+    it "should follow 'nextPageUrl' url from response" do
+      allow_any_instance_of(Contentful::SyncUrl::Sigleton).to receive(:get).and_return("http://www.example1.com")
+      allow_any_instance_of(Contentful::SyncUrl::Sigleton).to receive(:set_next).with("http://www.example1.com")
+      expect(RestClient).to receive(:get).with("http://www.example1.com").and_return("{\"nextPageUrl\":\"http://www.example2.com\"}")
+      expect(RestClient).to receive(:get).with("http://www.example2.com").and_return("{\"nextPageUrl\":\"http://www.example3.com\"}")
+      expect(RestClient).to receive(:get).with("http://www.example3.com").and_return("{}")
+
+      protocol.each_items_batch {|items| items }
+    end
   end
 end

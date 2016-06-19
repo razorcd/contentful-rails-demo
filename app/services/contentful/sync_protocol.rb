@@ -4,10 +4,9 @@ class Contentful::SyncProtocol
   end
 
   def each_items_batch
-    response = get_hash_response
+    response = get_hash_response(@url.get)
     loop do
-      response_items = response["items"]
-      (update_next_sync_url(response["nextSyncUrl"]); break) if response_items.empty?
+      response_items = response["items"].to_a
 
       serialized_items = response_items.map do |response_item|
         Contentful::ItemFactory.new(response_item).get_item
@@ -15,14 +14,14 @@ class Contentful::SyncProtocol
       yield serialized_items
 
       (update_next_sync_url(response["nextSyncUrl"]); break) unless response["nextPageUrl"]
-      response = JSON.parse request(response["nextPageUrl"])
+      response = get_hash_response(response["nextPageUrl"].to_s)
     end
   end
 
 private
 
-  def get_hash_response
-    response = request @url.get
+  def get_hash_response url
+    response = request url
     JSON.parse response
   end
 
