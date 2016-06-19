@@ -11,12 +11,12 @@ class Contentful::ItemFactory::ProductItem
       quantity: response_item.dig("fields", "quantity", "en-US") || 0,
       sku: response_item.dig("fields", "sku", "en-US") || "",
       website: response_item.dig("fields", "website", "en-US") || "",
+      category_remote_ids: response_item.dig("fields", "categories", "en-US").map {|c| c["sys"]["id"]} || [],
     }
   end
 
   def syncronize_db!
     Product.transaction do
-      product = Product.find_or_create_by(remote_id: @serialized_item[:id])
       tags= update_and_load_tags(@serialized_item[:tags])
 
       product.update!({
@@ -29,16 +29,29 @@ class Contentful::ItemFactory::ProductItem
         sku: @serialized_item[:sku],
         website: @serialized_item[:website],
         tags: tags,
+        categories: product_categories,
       }) #skips calling SQL query if data is the same
     end
   end
 
 private
 
-  def update_and_load_tags tags
+  def product
+    @product ||= Product.find_or_create_by(remote_id: @serialized_item[:id])
+  end
+
+  def product_categories #TODO memoize it
+    category_remote_ids = @serialized_item[:category_remote_ids]
+    return [] if category_remote_ids.blank?
+    category_remote_ids.map do |category_remote_id|
+      Category.find_or_create_by(remote_id: category_remote_id)
+    end
+  end
+
+  def update_and_load_tags tags #TODO memoize it
     return [] if tags.blank?
     tags.map do |tag|
-      Tag.find_or_create_by(value: tag) #skips calling SQL query if data is the same
+      Tag.find_or_create_by(value: tag)
     end
   end
 end
