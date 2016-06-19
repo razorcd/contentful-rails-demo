@@ -17,8 +17,8 @@ RSpec.describe Product, type: :model do
           class: ActiveRecord::Reflection::HasAndBelongsToManyReflection,
         },
         {
-          name: :category,
-          class: ActiveRecord::Reflection::BelongsToReflection,
+          name: :categories,
+          class: ActiveRecord::Reflection::HasAndBelongsToManyReflection,
         }
       ]
   end

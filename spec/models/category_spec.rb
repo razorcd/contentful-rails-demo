@@ -12,7 +12,7 @@ RSpec.describe Category, type: :model do
     expect(associations).to match_array [
         {
           name: :products,
-          class: ActiveRecord::Reflection::HasManyReflection,
+          class: ActiveRecord::Reflection::HasAndBelongsToManyReflection,
         }
       ]
   end

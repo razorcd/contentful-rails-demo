@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(version: 20160619170113) do
 
   add_index "categories", ["remote_id"], name: "index_categories_on_remote_id"
 
+  create_table "categories_products", id: false, force: :cascade do |t|
+    t.integer "category_id"
+    t.integer "product_id"
+  end
+
+  add_index "categories_products", ["category_id", "product_id"], name: "index_categories_products_on_category_id_and_product_id"
+
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.string   "remote_id"
@@ -35,10 +42,8 @@ ActiveRecord::Schema.define(version: 20160619170113) do
     t.integer  "quantity"
     t.string   "sku"
     t.string   "website"
-    t.integer  "category_id"
   end
 
-  add_index "products", ["category_id"], name: "index_products_on_category_id"
   add_index "products", ["remote_id"], name: "index_products_on_remote_id"
 
   create_table "products_tags", id: false, force: :cascade do |t|
