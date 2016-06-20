@@ -20,7 +20,7 @@ RSpec.describe Contentful::ItemFactory::AssetItem do
       expect(asset_double).to receive(:update!).with({
           title: "title_here",
           description: "description_here",
-          remote_file_url: "//www.example.com/image1.jpg",
+          remote_file_url: "#{ENV['DEFAULT_ASSET_URI_SCHEME']}://www.example.com/image1.jpg",
           file: "http://www.example.com/image1.jpg",
         })
 

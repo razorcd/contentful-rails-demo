@@ -13,7 +13,7 @@ class Contentful::ItemFactory::AssetItem
       asset.update!({
         title: @serialized_item[:title],
         description: @serialized_item[:description],
-        remote_file_url: @serialized_item[:file_url],
+        remote_file_url: asset_url,
         file: asset_url,
       }) #skips calling SQL query if data is the same
     end
@@ -26,9 +26,11 @@ private
   end
 
   def asset_url
-    url = URI.parse(@serialized_item[:file_url])
-    url.scheme ||= ENV['DEFAULT_ASSET_URI_SCHEME']
-    url.to_s
+    @asset_url ||= begin
+      url = URI.parse(@serialized_item[:file_url])
+      url.scheme ||= ENV['DEFAULT_ASSET_URI_SCHEME']
+      url.to_s
+    end
   end
 end
 

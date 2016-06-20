@@ -18,8 +18,6 @@ class Contentful::ItemFactory::ProductItem
 
   def syncronize_db!
     Product.transaction do
-      tags= update_and_load_tags(@serialized_item[:tags])
-
       product.update!({
         name: @serialized_item[:name],
         slug: @serialized_item[:slug],
@@ -42,21 +40,21 @@ private
     @product ||= Product.find_or_create_by(remote_id: @serialized_item[:id])
   end
 
-  def product_categories #TODO memoize it
+  def product_categories
     return [] if @serialized_item[:category_remote_ids].blank?
     @serialized_item[:category_remote_ids].map do |category_remote_id|
       Category.find_or_create_by(remote_id: category_remote_id)
     end
   end
 
-  def product_asset #TODO memoize it
+  def product_asset
     return nil if @serialized_item[:image_remote_id].blank?
     Asset.find_or_create_by(remote_id: @serialized_item[:image_remote_id])
   end
 
-  def update_and_load_tags tags #TODO memoize it
-    return [] if tags.blank?
-    tags.map do |tag|
+  def tags
+    return [] if @serialized_item[:tags].blank?
+    @serialized_item[:tags].map do |tag|
       Tag.find_or_create_by(value: tag)
     end
   end
