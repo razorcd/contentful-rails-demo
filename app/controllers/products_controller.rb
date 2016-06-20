@@ -1,9 +1,14 @@
 class ProductsController < ApplicationController
   def index
-    render json: Product.order(:created_at).all,
-        only: [:id, :name, :remote_id, :created_at, :updated_at, :slug, :description,
-           :size_type_color, :price, :quantity, :sku, :website],
-        methods: [:tag_values, :category_titles, :asset_url]
+    render json: Product.order(:created_at).eager_load(:categories, :tags, :asset).all,
+        only: [
+          :id, :name, :remote_id, :slug, :description, :size_type_color, :price, :quantity, :sku, :website
+        ],
+        include: {
+          categories: {only: [:id, :remote_id, :title, :description]},
+          tags: {only: :value},
+          asset: {only: [:id, :remote_id, :title, :description, :remote_file_url]},
+        }
   end
 
   def sync_all
