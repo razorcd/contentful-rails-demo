@@ -27,7 +27,7 @@ private
 
   def asset_url
     url = URI.parse(@serialized_item[:file_url])
-    url.scheme ||= Asset::DEFAULT_FILE_URI_SCHEME
+    url.scheme ||= ENV['DEFAULT_ASSET_URI_SCHEME']
     url.to_s
   end
 end

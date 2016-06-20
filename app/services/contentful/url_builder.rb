@@ -11,7 +11,7 @@
 #      url.with_access_token.with_initial_flag.to_s         # => https://www.example.com?a=1&access_token=&initial=true
 #      url.to_s                                             # => https://www.example.com?a=1?
 class Contentful::UrlBuilder
-  ACCESS_TOKEN = ENV["ACCESS_TOKEN"]
+  CONTENTFUL_ACCESS_TOKEN = ENV["CONTENTFUL_ACCESS_TOKEN"]
 
   def initialize url
     @url = url
@@ -19,7 +19,7 @@ class Contentful::UrlBuilder
   end
 
   def with_access_token
-    @query << "access_token=#{ACCESS_TOKEN}"
+    @query << "access_token=#{CONTENTFUL_ACCESS_TOKEN}"
     self
   end
 

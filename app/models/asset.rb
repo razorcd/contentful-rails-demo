@@ -1,6 +1,4 @@
 class Asset < ActiveRecord::Base
-  DEFAULT_FILE_URI_SCHEME = "http"
-
   has_many :products
   has_attached_file :file
 
