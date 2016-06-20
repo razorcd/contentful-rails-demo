@@ -13,4 +13,12 @@ RSpec.describe Contentful do
       Contentful.new.syncronize_products!
     end
   end
+
+  context "#reset_to_initial!" do
+    it "should reset sync url" do
+      expect(Contentful::SyncUrl).to receive_message_chain(:new, :reset!)
+
+      Contentful.new.reset_to_initial!
+    end
+  end
 end

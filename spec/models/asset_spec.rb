@@ -14,8 +14,8 @@ RSpec.describe Asset, type: :model do
 
     expect(associations).to match_array [
         {
-          name: :product,
-          class: ActiveRecord::Reflection::HasOneReflection,
+          name: :products,
+          class: ActiveRecord::Reflection::HasManyReflection,
         },
       ]
   end

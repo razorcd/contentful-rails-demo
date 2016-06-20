@@ -4,6 +4,10 @@ class Contentful
       items.map(&:syncronize_db!)
     end
   end
+
+  def reset_to_initial!
+    Contentful::SyncUrl.new.reset!
+  end
 end
 
 

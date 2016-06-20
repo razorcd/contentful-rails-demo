@@ -21,11 +21,8 @@ RSpec.describe ProductsController, type: :controller do
 
   context "#reset_and_sync_all" do
     it "should trigger a full products reset and sync" do
-      expect(Product).to receive(:delete_all)
-      expect(Tag).to receive(:delete_all)
-      expect(Category).to receive(:delete_all)
-      expect(Asset).to receive(:delete_all_and_remove_files)
-      expect(Contentful::SyncUrl).to receive_message_chain(:new, :reset!)
+      expect(ResourceCleaner).to receive(:wipe_all)
+      expect(Contentful).to receive_message_chain(:new, :reset_to_initial!)
       expect(Contentful).to receive_message_chain(:new, :syncronize_products!)
 
       get :reset_and_sync_all

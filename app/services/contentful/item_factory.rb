@@ -16,7 +16,7 @@ class Contentful::ItemFactory
     elsif type == "DeletedEntry"
       return Contentful::ItemFactory::DeletedEntryItem.new @response_item
     else
-      puts "Ignoring unknown item: content_type_id: '#{content_type_id}', type: '#{type}'."
+      Rails.logger.info "Ignoring unknown item: content_type_id: '#{content_type_id}', type: '#{type}'."
       return nil
     end
   end
