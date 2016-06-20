@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  skip_before_action :verify_authenticity_token  #disables CSRF token
+
   def index
     render json: Product.order(:created_at).eager_load(:categories, :tags, :asset).all,
         only: [
