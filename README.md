@@ -6,6 +6,10 @@ See [doc_api.md](https://github.com/razorcd/contentful-rails-demo/blob/master/do
 
 ## Development
 
+- install `ruby 2.3.1`
+- run `bundle install`
+- update `.env.development` and `.env.test` based on `.env.example`
+
 - to run tests: `rspec`
 - to clear VCR persisted requests: `rm spec/fixtures/vcr_cassettes/*`
 
