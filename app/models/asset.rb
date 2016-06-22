@@ -6,6 +6,6 @@ class Asset < ActiveRecord::Base
 
   def self.delete_all_and_remove_files
     self.delete_all
-    FileUtils.rm_rf("#{ENV['LOCAL_STORAGE_PATH']}/assets")
+    FileUtils.rm_rf("/public/#{ENV['LOCAL_STORAGE_FOLDER']}")
   end
 end

@@ -42,7 +42,7 @@ Rails.application.configure do
   config.paperclip_defaults = {
     storage: :fog, fog_credentials: {
       provider: "Local",
-      local_root: "#{Rails.root}/#{ENV['LOCAL_STORAGE_PATH']}"
+      local_root: "#{Rails.root}/public/#{ENV['LOCAL_STORAGE_FOLDER']}"
     },
     fog_directory: "",
     fog_host: "#{ENV['FOG_HOST']}"

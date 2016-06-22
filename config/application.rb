@@ -22,5 +22,8 @@ module ContentfulRailsDemo
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    config.autoload_paths += %W(#{config.root}/app/serializers)
+
+    raise "Invalid LOCAL_STORAGE_FOLDER" if ENV['LOCAL_STORAGE_FOLDER'].include?("..")
   end
 end
