@@ -10,7 +10,7 @@ class Contentful::SyncUrl
   INITIAL_URL= ENV["INITIAL_PRODUCTS_URL"]
   NEXT_URL_FILE = ENV["NEXT_URL_FILE"]
 
-  class Contentful::SyncUrl::Sigleton
+  class Contentful::SyncUrl::Singleton
     def initialize
       persisted_url = read_persisted_next_url
       @next_url = Contentful::UrlBuilder.new(persisted_url || INITIAL_URL)
@@ -62,6 +62,6 @@ class Contentful::SyncUrl
   end
 
   def self.new
-    @@instace||= Contentful::SyncUrl::Sigleton.new
+    @@instace||= Contentful::SyncUrl::Singleton.new
   end
 end
