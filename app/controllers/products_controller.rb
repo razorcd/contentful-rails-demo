@@ -2,21 +2,16 @@ class ProductsController < ApplicationController
   skip_before_action :verify_authenticity_token  #disables CSRF token
 
   def index
-    render json: Product.order(:created_at).eager_load(:categories, :tags, :asset).all,
-        only: [
-          :id, :name, :remote_id, :slug, :description, :size_type_color, :price, :quantity, :sku, :website
-        ],
-        include: {
-          categories: {only: [:id, :remote_id, :title, :description]},
-          tags: {only: :value},
-          asset: {only: [:id, :remote_id, :title, :description, :remote_file_url]},
-        }
+    render json: products.map {|product| ::Serializer::Product.new(product)}
   end
 
   def sync_all
-    contentful.syncronize_products!
-
-    render nothing: true, status: 200
+    items_changed_count = contentful.syncronize_products!
+    if items_changed_count < 0
+      render json: {error_message: contentful.message}, status: 500
+    else
+      render json: {items_changed_count: items_changed_count}, status: 200
+    end
   end
 
   def reset_and_sync_all
@@ -28,6 +23,10 @@ class ProductsController < ApplicationController
   end
 
 private
+
+  def products
+    Product.order(:created_at).eager_load(:categories, :tags, :asset).all
+  end
 
   def contentful
     @contentful ||= Contentful.new
