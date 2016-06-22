@@ -5,7 +5,7 @@ class Contentful
     end
   end
 
-  def reset_to_initial!
+  def reset_to_initial_url!
     Contentful::SyncUrl.new.reset!
   end
 end

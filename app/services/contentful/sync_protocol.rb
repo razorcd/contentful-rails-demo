@@ -4,7 +4,7 @@ class Contentful::SyncProtocol
   end
 
   def each_items_batch
-    response = get_hash_response(@url.get)
+    response = get_hash_response @url.get
     loop do
       response_items = response["items"].to_a
 
@@ -13,8 +13,11 @@ class Contentful::SyncProtocol
       end.compact
       yield serialized_items
 
-      (update_next_sync_url(response["nextSyncUrl"]); break) unless response["nextPageUrl"]
-      response = get_hash_response(response["nextPageUrl"].to_s)
+      unless response["nextPageUrl"]
+        update_next_sync_url response["nextSyncUrl"]
+        break
+      end
+      response = get_hash_response response["nextPageUrl"].to_s
     end
   end
 
@@ -42,7 +45,7 @@ private
   end
 
   def log_request request_url, response
-    Rails.logger.info "\nRequesting HTTP GET URL: #{request_url}"
-    Rails.logger.info("\nResponse:"); Rails.logger.info(response); Rails.logger.info("\n")
+    Rails.logger.info "\nRequesting HTTP GET URL: #{request_url}\n"
+    Rails.logger.info "\nResponse: #{response}\n"
   end
 end

@@ -6,20 +6,16 @@ class ProductsController < ApplicationController
   end
 
   def sync_all
-    items_changed_count = contentful.syncronize_products!
-    if items_changed_count < 0
-      render json: {error_message: contentful.message}, status: 500
-    else
-      render json: {items_changed_count: items_changed_count}, status: 200
-    end
+    contentful.syncronize_products!
+    render json: {}, status: 200
   end
 
   def reset_and_sync_all
     ResourceCleaner.wipe_all
-    contentful.reset_to_initial!
+    contentful.reset_to_initial_url!
     contentful.syncronize_products!
 
-    render nothing: true, status: 200
+    render json: {}, status: 200
   end
 
 private

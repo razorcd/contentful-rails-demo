@@ -14,11 +14,11 @@ RSpec.describe Contentful do
     end
   end
 
-  context "#reset_to_initial!" do
+  context "#reset_to_initial_url!" do
     it "should reset sync url" do
       expect(Contentful::SyncUrl).to receive_message_chain(:new, :reset!)
 
-      Contentful.new.reset_to_initial!
+      Contentful.new.reset_to_initial_url!
     end
   end
 end
